@@ -1,10 +1,17 @@
-import { useState } from "react";
-import { Game } from "./pages";
+import { useController } from "./utils/hooks";
+import { ClipItem } from "./components/clipItem";
 
 function App() {
+  const [typing, fullTyping, score] = useController();
   return (
     <div className="App">
-      <Game />
+      <div>得分：{score}</div>
+      <div>敲击键盘：{typing}</div>
+      <div>
+        {(fullTyping as string[]).map((item, index) => {
+          return <ClipItem key={`item-${index}`} title={item} />;
+        })}
+      </div>
     </div>
   );
 }
