@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { Game } from "./pages";
+import { useEffect } from "react";
+import { Controller } from "./utils";
+import { useController } from "./utils/hooks";
 
 function App() {
-  return (
-    <div className="App">
-      <Game />
-    </div>
-  );
+  useEffect(() => {
+    // Controller.init();
+  }, []);
+  const arrs = ["wode", "hooks", "dsajk", "djk", "dsa"];
+  const [tying, fullTyping] = useController(arrs);
+  return <div className="App">{Controller.getStrs()}</div>;
 }
 
 export default App;
