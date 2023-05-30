@@ -2,3 +2,24 @@
   margin: 0;
   padding: 0;
 }
+.clipItem {
+  position: absolute;
+  width: 30vw;
+  height: 10vh;
+  background-color: aqua;
+  text-align: center;
+  line-height: 10vh;
+  transition: 5s all linear;
+}
+.left {
+  left: 0;
+}
+.middle {
+  left: 35vw;
+}
+.right {
+  right: 0;
+}
+.bottom {
+  transform: translateY(155vw);
+}

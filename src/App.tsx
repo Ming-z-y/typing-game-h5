@@ -1,14 +1,19 @@
-import { useEffect } from "react";
-import { Controller } from "./utils";
 import { useController } from "./utils/hooks";
+import { ClipItem } from "./components/clipItem";
 
 function App() {
-  useEffect(() => {
-    // Controller.init();
-  }, []);
-  const arrs = ["wode", "hooks", "dsajk", "djk", "dsa"];
-  const [tying, fullTyping] = useController(arrs);
-  return <div className="App">{Controller.getStrs()}</div>;
+  const [typing, fullTyping, score] = useController();
+  return (
+    <div className="App">
+      <div>得分：{score}</div>
+      <div>敲击键盘：{typing}</div>
+      <div>
+        {(fullTyping as string[]).map((item, index) => {
+          return <ClipItem key={`item-${index}`} title={item} />;
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default App;
