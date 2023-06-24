@@ -1,19 +1,9 @@
-import { useController } from "./utils/hooks";
-import { ClipItem } from "./components/clipItem";
+import { useRoutes } from "react-router-dom";
+import router from "./router";
 
 function App() {
-  const [typing, fullTyping, score] = useController();
-  return (
-    <div className="App">
-      <div>得分：{score}</div>
-      <div>敲击键盘：{typing}</div>
-      <div>
-        {(fullTyping as string[]).map((item, index) => {
-          return <ClipItem key={`item-${index}`} title={item} />;
-        })}
-      </div>
-    </div>
-  );
+  const element = useRoutes(router);
+  return <div className="background">{element}</div>;
 }
 
 export default App;
