@@ -13,12 +13,17 @@ export function useStorage<K>(
   };
 
   useEffect(() => {
+    const val = JSON.parse(localStorage.getItem(key) as string);
+    setValue(val);
+  }, [key]);
+
+  useEffect(() => {
     // 如果没有值就把初始值设置给它
     if (initialValue && !localStorage.getItem(key)) {
       setValue(initialValue);
       localStorage.setItem(key, JSON.stringify(initialValue));
     }
-  }, []);
+  }, [key]);
 
   useEffect(() => {
     if (value !== null) {

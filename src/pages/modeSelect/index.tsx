@@ -3,35 +3,21 @@ import styles from "./index.module.less";
 
 export const ModeSelect = () => {
   const navigate = useNavigate();
-  const navToGame = (
-    time: number,
-    zNum: number,
-    column: number,
-    cate: string
-  ) => {
-    navigate(`/game/${time}/${zNum}/${column}/${cate}`);
+  const navToGame = (cate: string) => {
+    navigate(`/game/${cate}`);
   };
   return (
     <>
       <div className={styles.div_mode}>
         <div className={styles.title_nandu}>难度选择</div>
         <div className={styles.select}>
-          <div
-            className={styles.nandu}
-            onClick={() => navToGame(5000, 1, 3, "简单")}
-          >
+          <div className={styles.nandu} onClick={() => navToGame("easy")}>
             简单
           </div>
-          <div
-            className={styles.nandu}
-            onClick={() => navToGame(3000, 2, 3, "中等")}
-          >
+          <div className={styles.nandu} onClick={() => navToGame("middle")}>
             中等
           </div>
-          <div
-            className={styles.nandu}
-            onClick={() => navToGame(1000, 3, 4, "困难")}
-          >
+          <div className={styles.nandu} onClick={() => navToGame("hard")}>
             困难
           </div>
         </div>

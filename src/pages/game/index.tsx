@@ -4,15 +4,19 @@ import { ClipItem } from "@/components/clipItem";
 import styles from "./index.module.less";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import { Setting, mapData } from "../gameSetting/setting";
 
 export function Game() {
   const [isRunning, setIsRunning] = useState(true);
   const [runningSpeed, setRunningSpeed] = useState(50);
   const [_, setHisRank] = useStorage<Record<string, unknown>[]>("history", []);
   const params = useParams();
+  const category = params.category || "easy";
+  const [settingVal] = useStorage<Setting>(category, mapData[category]);
+  const { time, zimuNum, column } = settingVal;
   const [typing, fullTyping, score] = useController({
-    period: Number(params.time) || 3000,
-    zimuNum: Number(params.num) || 1,
+    period: Number(time) || 3000,
+    zimuNum: Number(zimuNum) || 1,
     isRun: isRunning,
     keyFunc: {
       Enter: (e) => {
@@ -28,7 +32,6 @@ export function Game() {
   const isStop = () => {
     setIsRunning(false);
     const time = moment().format("yyyy-MM-D HH:mm:ss");
-    const category = params.category;
     setHisRank((e) => [{ time, score, category }, ...e]);
     window.alert(`game over! your score is ${score}`);
   };
@@ -48,7 +51,7 @@ export function Game() {
                 isRunning={isRunning}
                 speed={runningSpeed}
                 isStop={isStop}
-                column={Number(params.column) || 3}
+                column={Number(column) || 3}
                 isFinish={item.isFinish}
               />
             );

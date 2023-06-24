@@ -11,7 +11,7 @@ export default [
     element: <Menu />,
   },
   {
-    path: "/game/:time/:num/:column/:category",
+    path: "/game/:category",
     element: <Game />,
   },
   {

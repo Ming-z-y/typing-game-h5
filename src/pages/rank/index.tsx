@@ -3,7 +3,7 @@ import styles from "./index.module.less";
 import { History } from "../../../types";
 
 export const Rank = () => {
-  const [rank, setRank] = useStorage<History[]>("history");
+  const [rank, setRank] = useStorage<History[]>("history", []);
   return (
     <div className={styles.back}>
       <div className={styles.top}>
@@ -17,7 +17,7 @@ export const Rank = () => {
           清空历史记录
         </div>
       </div>
-      {rank.length !== 0 ? (
+      {rank && rank.length !== 0 ? (
         <div className={styles.contentBack}>
           {rank.map((item, index) => {
             return (
