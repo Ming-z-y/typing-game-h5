@@ -2,24 +2,23 @@
   margin: 0;
   padding: 0;
 }
-.clipItem {
-  position: absolute;
-  width: 30vw;
-  height: 10vh;
-  background-color: aqua;
-  text-align: center;
-  line-height: 10vh;
-  transition: 5s all linear;
+
+html {
+  min-height: 100vh;
+  /* background-image: url("./assets/images/back1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; */
+  background-color: #d9afd9;
+  background-image: linear-gradient(0deg, #d9afd9 0%, #97d9e1 100%);
 }
-.left {
-  left: 0;
+
+input {
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  height: 30px;
+  border-radius: 10px;
+  padding-left: 10px;
 }
-.middle {
-  left: 35vw;
-}
-.right {
-  right: 0;
-}
-.bottom {
-  transform: translateY(155vw);
+input:focus {
+  outline: none;
 }
