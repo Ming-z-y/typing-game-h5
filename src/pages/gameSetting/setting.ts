@@ -20,4 +20,9 @@ export const mapData: Record<string, Setting> = {
     zimuNum: 3,
     time: 2000,
   },
+  c6: {
+    column: 4,
+    zimuNum: 3,
+    time: 2000,
+  },
 };

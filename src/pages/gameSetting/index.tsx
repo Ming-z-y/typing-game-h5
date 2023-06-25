@@ -69,6 +69,7 @@ export const GameSetting = () => {
         }}
       />
       <div className={styles.title}>快捷键设置</div>
+      <div className={styles.itemTitle}>暂无</div>
     </div>
   );
 };

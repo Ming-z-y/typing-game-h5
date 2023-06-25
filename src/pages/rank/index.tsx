@@ -2,6 +2,12 @@ import { useStorage } from "@/utils/hooks";
 import styles from "./index.module.less";
 import { History } from "../../../types";
 
+const historyMap: { [k: string]: string } = {
+  easy: "简单",
+  middle: "中等",
+  hard: "困难",
+};
+
 export const Rank = () => {
   const [rank, setRank] = useStorage<History[]>("history", []);
   return (
@@ -23,7 +29,7 @@ export const Rank = () => {
             return (
               <div key={`history-${index}`} className={styles.historyCard}>
                 <div>时间：{item.time}</div>
-                <div>难度：{item.category}</div>
+                <div>难度：{historyMap[item.category]}</div>
                 <div>得分：{item.score}</div>
               </div>
             );

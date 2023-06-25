@@ -9,16 +9,19 @@ export const ModeSelect = () => {
   return (
     <>
       <div className={styles.div_mode}>
-        <div className={styles.title_nandu}>难度选择</div>
+        <div className={styles.title_nandu}>模式选择</div>
         <div className={styles.select}>
           <div className={styles.nandu} onClick={() => navToGame("easy")}>
-            简单
+            简单模式
           </div>
           <div className={styles.nandu} onClick={() => navToGame("middle")}>
-            中等
+            中等模式
           </div>
           <div className={styles.nandu} onClick={() => navToGame("hard")}>
-            困难
+            困难模式
+          </div>
+          <div className={styles.nandu} onClick={() => navToGame("c6")}>
+            英语六级模式
           </div>
         </div>
       </div>
