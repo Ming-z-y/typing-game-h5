@@ -1,11 +1,12 @@
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useController, useStorage } from "@/utils/hooks";
 import { ClipItem } from "@/components/clipItem";
 import styles from "./index.module.less";
 import { useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
 import { Setting, mapData } from "../gameSetting/setting";
 import axios from "@/utils/request/request";
+import { getRandom } from "@/utils/math/getRandom";
 
 export function Game() {
   const params = useParams();
@@ -20,16 +21,24 @@ export function Game() {
   const column = settingVal?.column || 4;
   const [isVisibility, setIsVisibility] = useState(false);
   const [cet, setCet] = useState<string[]>([]);
+  const [wordAscii, setWordAscii] = useState(getRandom(65, 90));
   const [typing, fullTyping, setFullTyping, score, setScore] = useController({
     period: Number(time) || 3000,
     zimuNum: Number(zimuNum) || 1,
     isRun: isRunning,
     keyFunc: {
-      Enter: (e) => {
+      Enter: () => {
         setIsRunning((e) => !e);
+      },
+      ArrowUp: () => {
+        setWordAscii((e) => (e + 1 > 90 ? 65 : e + 1));
+      },
+      ArrowDown: () => {
+        setWordAscii((e) => (e - 1 < 65 ? 90 : e - 1));
       },
     },
     initData: cet,
+    column,
   });
 
   const againGame = () => {
@@ -51,11 +60,12 @@ export function Game() {
   };
 
   useEffect(() => {
+    const word = String.fromCharCode(wordAscii);
     category === "c6" &&
-      axios.get("/C6").then((e) => {
+      axios.get(`/C6/${word}`).then((e) => {
         setCet(e.data);
       });
-  }, []);
+  }, [wordAscii]);
 
   return (
     <>
@@ -80,6 +90,7 @@ export function Game() {
                   column={Number(column) || 3}
                   isFinish={item.isFinish}
                   isMatchStart={item.hasMatchStart}
+                  position={item.positionIndex}
                 />
               );
             }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getRandom } from "../math";
 
 const functionKey = [
   "Enter",
@@ -11,6 +12,7 @@ const functionKey = [
   "ArrowLeft",
   "ArrowRight",
   "Backspace",
+  "CapsLock",
 ];
 type keyType =
   | "Enter"
@@ -22,7 +24,8 @@ type keyType =
   | "ArrowDown"
   | "ArrowLeft"
   | "ArrowRight"
-  | "Backspace";
+  | "Backspace"
+  | "CapsLock";
 
 interface State {
   period?: number; // time
@@ -30,12 +33,26 @@ interface State {
   zimuNum?: number;
   keyFunc?: Partial<Record<keyType, (e: KeyboardEvent) => void>>; // key functions
   initData?: string[];
+  column?: number;
 }
 
 export interface typingType {
   name: string;
   isFinish: boolean;
   hasMatchStart: boolean;
+  positionIndex: number;
+}
+
+function findPosition(column: number, isHasDiv: boolean[]) {
+  if (!isHasDiv.includes(false)) {
+    return -1;
+  }
+  const random = getRandom(0, column);
+  if (!isHasDiv[random]) {
+    return random;
+  } else {
+    return findPosition(column, isHasDiv);
+  }
 }
 
 export function useController(
@@ -47,12 +64,21 @@ export function useController(
   number,
   React.Dispatch<React.SetStateAction<number>>
 ] {
-  const { period = 5000, isRun, keyFunc, zimuNum = 1, initData } = params;
+  const {
+    period = 5000,
+    isRun,
+    keyFunc,
+    zimuNum = 1,
+    initData,
+    column = 3,
+  } = params;
   const [fullTyping, setFullTyping] = useState<typingType[]>([]);
   const [typing, setTyping] = useState<string>("");
   const [score, setScore] = useState(0);
-  const [newT, setNewT] = useState("");
   const [startIndex, setStartIndex] = useState(0);
+  const [isHasDiv, setIsHasDiv] = useState<boolean[]>(
+    Array(column).fill(false)
+  );
   const [initD, setInitD] = useState<string[]>([]);
   let time: NodeJS.Timer;
 
@@ -95,19 +121,43 @@ export function useController(
     time = setInterval(() => {
       if (isRun) {
         if (!initD || initD.length === 0) {
+          // 随机生成字母
           const str = Math.random().toString(36).slice(-zimuNum);
-          setNewT(str);
-          setFullTyping((e) => [
-            ...e,
-            { name: str, isFinish: false, hasMatchStart: false },
-          ]);
+          const position = findPosition(column, isHasDiv);
+          if (position != -1) {
+            setFullTyping((e) => [
+              ...e,
+              {
+                name: str,
+                isFinish: false,
+                hasMatchStart: false,
+                positionIndex: position,
+              },
+            ]);
+            setIsHasDiv((e) => {
+              e[position] = true;
+              return e;
+            });
+          }
         } else {
-          const index = Math.floor(Math.random() * initD.length);
-          setNewT(initD[index]);
-          setFullTyping((e) => [
-            ...e,
-            { name: initD[index], isFinish: false, hasMatchStart: false },
-          ]);
+          // 生成已知的字符串数组
+          const index = getRandom(0, initD.length);
+          const position = findPosition(column, isHasDiv);
+          if (position != -1) {
+            setFullTyping((e) => [
+              ...e,
+              {
+                name: initD[index],
+                isFinish: false,
+                hasMatchStart: false,
+                positionIndex: position,
+              },
+            ]);
+            setIsHasDiv((e) => {
+              e[position] = true;
+              return e;
+            });
+          }
         }
       }
     }, period);
@@ -122,6 +172,10 @@ export function useController(
       setFullTyping((e) => {
         e[index].isFinish = true;
         // return e.filter((item) => !item.isFinish);
+        return e;
+      });
+      setIsHasDiv((e) => {
+        e[index] = false;
         return e;
       });
     } else if (hasMatchStart) {

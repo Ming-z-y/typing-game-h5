@@ -8,12 +8,12 @@ export const mapData: Record<string, Setting> = {
   easy: {
     column: 3,
     zimuNum: 1,
-    time: 5000,
+    time: 2000,
   },
   middle: {
     column: 3,
     zimuNum: 2,
-    time: 3000,
+    time: 2000,
   },
   hard: {
     column: 4,

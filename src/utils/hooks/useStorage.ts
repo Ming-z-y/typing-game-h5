@@ -15,7 +15,7 @@ export function useStorage<K>(
   useEffect(() => {
     const val = JSON.parse(localStorage.getItem(key) as string);
     setValue(val);
-  }, []);
+  }, [key]);
 
   useEffect(() => {
     // 如果没有值就把初始值设置给它

@@ -6,6 +6,7 @@ const historyMap: { [k: string]: string } = {
   easy: "简单",
   middle: "中等",
   hard: "困难",
+  c6: "英语6级",
 };
 
 export const Rank = () => {
@@ -29,7 +30,7 @@ export const Rank = () => {
             return (
               <div key={`history-${index}`} className={styles.historyCard}>
                 <div>时间：{item.time}</div>
-                <div>难度：{historyMap[item.category]}</div>
+                <div>模式：{historyMap[item.category]}</div>
                 <div>得分：{item.score}</div>
               </div>
             );
