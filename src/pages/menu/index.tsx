@@ -25,7 +25,7 @@ export function Menu() {
           游戏设置
         </div>
         <div className={styles.menuItem} onClick={naviToRank}>
-          排行榜
+          历史记录
         </div>
       </div>
     </>

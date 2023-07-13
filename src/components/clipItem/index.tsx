@@ -1,6 +1,6 @@
 import { FC, createRef, useEffect, useState } from "react";
 import styles from "./index.module.less";
-import { generateRandomColor, getRandom } from "@/utils";
+import { generateRandomColor } from "@/utils";
 
 interface ClipItem {
   title: string;

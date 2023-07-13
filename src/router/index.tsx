@@ -26,8 +26,8 @@ export default [
     path: "/rank",
     element: <Rank />,
   },
-  {
-    path: "*",
-    element: <>not found</>,
-  },
+  // {
+  //   path: "*",
+  //   element: <>not found</>,
+  // },
 ];

@@ -43,11 +43,11 @@ export interface typingType {
   positionIndex: number;
 }
 
-function findPosition(column: number, isHasDiv: boolean[]) {
+function findPosition(column: number, isHasDiv: boolean[]): number {
   if (!isHasDiv.includes(false)) {
     return -1;
   }
-  const random = getRandom(0, column);
+  const random = getRandom(0, column - 1);
   if (!isHasDiv[random]) {
     return random;
   } else {
@@ -82,21 +82,22 @@ export function useController(
   const [initD, setInitD] = useState<string[]>([]);
   let time: NodeJS.Timer;
 
-  const hasMatch = (): [boolean, number, boolean, number] => {
+  const hasMatch = (): [boolean, number, number, boolean, number] => {
     if (typing === "") {
-      return [false, -1, false, -1];
+      return [false, -1, -1, false, -1];
     }
     for (let i = 0; i < fullTyping.length; i++) {
-      if (fullTyping[i].name === typing && !fullTyping[i].isFinish) {
+      if (fullTyping[i].isFinish) continue;
+      if (fullTyping[i].name === typing) {
         setTyping("");
         setScore((e) => e + 10);
-        return [true, i, false, i];
+        return [true, i, fullTyping[i].positionIndex, false, i];
       } else if (fullTyping[i].name.startsWith(typing)) {
         setStartIndex(i);
-        return [false, -1, true, i];
+        return [false, -1, -1, true, i];
       }
     }
-    return [false, -1, false, -1];
+    return [false, -1, -1, false, -1];
   };
 
   useEffect(() => {
@@ -124,6 +125,7 @@ export function useController(
           // 随机生成字母
           const str = Math.random().toString(36).slice(-zimuNum);
           const position = findPosition(column, isHasDiv);
+
           if (position != -1) {
             setFullTyping((e) => [
               ...e,
@@ -135,8 +137,9 @@ export function useController(
               },
             ]);
             setIsHasDiv((e) => {
-              e[position] = true;
-              return e;
+              const arr = e;
+              arr[position] = true;
+              return arr;
             });
           }
         } else {
@@ -154,7 +157,8 @@ export function useController(
               },
             ]);
             setIsHasDiv((e) => {
-              e[position] = true;
+              const arr = e;
+              arr[position] = true;
               return e;
             });
           }
@@ -167,15 +171,14 @@ export function useController(
   }, [isRun, period, initD, initData]);
 
   useEffect(() => {
-    const [isMatch, index, hasMatchStart, i] = hasMatch();
+    const [isMatch, index, column, hasMatchStart, i] = hasMatch();
     if (isMatch) {
       setFullTyping((e) => {
         e[index].isFinish = true;
-        // return e.filter((item) => !item.isFinish);
         return e;
       });
       setIsHasDiv((e) => {
-        e[index] = false;
+        e[column] = false;
         return e;
       });
     } else if (hasMatchStart) {

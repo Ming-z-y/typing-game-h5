@@ -20,7 +20,6 @@ export function useStorage<K>(
   useEffect(() => {
     // 如果没有值就把初始值设置给它
     if (initialValue && !localStorage.getItem(key)) {
-      console.log("xxx");
       setValue(initialValue);
       localStorage.setItem(key, JSON.stringify(initialValue));
     }
