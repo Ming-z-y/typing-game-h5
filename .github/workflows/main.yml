@@ -22,8 +22,14 @@ jobs:
       - name: build
         run: npm run build
 
+      - name: checkout server
+        run: cd ./service
+
+      - name: install
+        run: npm install
+
       - name: run server
-        run: cd ./service && npm install && npm run build
+        run: npm run build
 
       # 命名这个任务为发布Deploy
       - name: Deploy
