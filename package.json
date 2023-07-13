@@ -32,8 +32,6 @@
     "vite": "^3.2.3"
   },
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx}": [
-      "eslint --ext .js,.jsx,.ts,.tsx"
-    ]
+    "**/*.{js,ts,jsx,tsx}": "eslint --ext .js,.jsx,.ts,.tsx"
   }
 }
