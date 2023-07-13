@@ -23,7 +23,7 @@ jobs:
         run: npm run build
 
       - name: run server
-        run: cd ./service && npm run build
+        run: cd ./service && npm install && npm run build
 
       # 命名这个任务为发布Deploy
       - name: Deploy
