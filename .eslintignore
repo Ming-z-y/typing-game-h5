@@ -1,0 +1,6 @@
+node_modeles/*
+dist/*
+.github/*
+.vscode/*
+service/dist/*
+service/node_modeles/*
