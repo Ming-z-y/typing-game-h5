@@ -15,11 +15,16 @@ jobs:
       # 使用别人的action
       - uses: actions/checkout@v2
       # 步骤名称
-      - name: npm install
+      - name: install
         # 步骤执行指令
         run: npm install
-      - name: npm run build
+
+      - name: build
         run: npm run build
+
+      - name: run server
+        run: cd ./service && npm run build
+
       # 命名这个任务为发布Deploy
       - name: Deploy
         # 因为构建之后，需要把代码上传到服务器上，所以需要连接到ssh，并且做一个拷贝操作
