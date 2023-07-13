@@ -20,6 +20,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "semi": 2
+        "semi": "warn",
+        "no-console": "error"
     }
 }
